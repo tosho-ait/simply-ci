@@ -2,7 +2,7 @@
 simple and stateless CI
 
 
-#GOALS
+# GOALS
 
 - stateless CI/CD without the need of a heavy automation server
 - true everything-in-the-repo approach  
@@ -11,18 +11,18 @@ simple and stateless CI
 - only docker!
 
 
-#COMMAND LINE USAGE EXAMPLE
+# COMMAND LINE USAGE EXAMPLE
 
-# build a local folder
+- build a local folder
 docker run -v ./:/target -v docker/socket simlyci --watch --step deploy_local 
 
-# build a remote git repo
+- build a remote git repo
 docker run simlyci --target=https://git -e GIT_USER=user -e GIT_PASSWORD --step deploy_to_int
 
 
 
 
-#YAML EXAMPLE
+# YAML EXAMPLE
 
 for:
 	branches: # what branches does this config apply to

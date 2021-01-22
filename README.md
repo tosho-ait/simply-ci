@@ -14,9 +14,11 @@ simple and stateless CI
 # COMMAND LINE USAGE EXAMPLE
 
 - build a local folder
+
 docker run -v ./:/target -v docker/socket simlyci --watch --step deploy_local 
 
 - build a remote git repo
+
 docker run simlyci --target=https://git -e GIT_USER=user -e GIT_PASSWORD --step deploy_to_int
 
 

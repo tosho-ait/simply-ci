@@ -48,7 +48,9 @@ pipelines: # declare your steps
 			docker:
 				dockerfile:
 				image:
-				push:
+				composefile:
+				build: true/false
+				push: true/false
 			script:
 		artefacts;
 			files:

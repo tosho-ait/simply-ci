@@ -23,19 +23,15 @@ docker run simlyci --target=https://git -e GIT_USER=user -e GIT_PASSWORD --step 
 
 
 
-
 # YAML EXAMPLE
 
+````
 for:
 	branches: # what branches does this config apply to
 	storage:
 		branch:
 		disabled: 
-	
-
 variables: # declare variables here
-
-
 pipelines: # declare your steps
 	step: 
 		name: # name of the step
@@ -60,13 +56,11 @@ pipelines: # declare your steps
 		when: # manual/automatic
 		extends:
 		variables:
-		
 environments:
 	env:
 		name:
 		connection:
 			type:
 			user:
-			password:
-			
-	
+			password:			
+````

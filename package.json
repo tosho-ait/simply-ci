@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/tosho-ait/simply-ci/issues"
   },
-  "homepage": "https://github.com/tosho-ait/simply-ci#readme"
+  "homepage": "https://github.com/tosho-ait/simply-ci#readme",
+  "dependencies": {
+    "yargs": "^16.2.0"
+  }
 }

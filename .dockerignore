@@ -1,0 +1,8 @@
+# node
+node_modules
+npm-debug.log
+Dockerfile
+
+#IDE ans SC
+.idea
+.git

@@ -36,6 +36,21 @@ const argv = yargs
 const greeting = `Hello!`;
 
 console.log(greeting);
+console.log(JSON.stringify(argv));
+
+const { exec } = require("child_process");
+
+exec("cd /workspace && ls -al && docker build -t simplyci .", (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+});
 
 
 

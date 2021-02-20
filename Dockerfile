@@ -1,23 +1,28 @@
-FROM docker:19
+FROM ubuntu:18.04
 
 MAINTAINER todor.ait@gmail.com
 
-# Install GIT
-RUN apk add --no-cache git
+# TODO make better image, this is just a poc...
 
-RUN apk update
+ENV DEBIAN_FRONTEND=noninteractive
 
-#Install compose
-RUN apk add py-pip python3-dev libffi-dev openssl-dev gcc libc-dev make
-RUN pip install docker-compose
+RUN apt update
 
-#install node
-RUN apk add nodejs npm
+# install docker
+RUN apt -y install docker.io
 
-#Workdir
+# install git
+RUN apt -y install git
+
+# install node
+RUN apt -y install curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
+RUN apt -y install nodejs
+
+# workdir
 WORKDIR /usr/src/app
 
-#Add the app
+# add the app
 COPY package*.json ./
 RUN npm install
 COPY . .

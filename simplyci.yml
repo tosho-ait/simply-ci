@@ -1,0 +1,38 @@
+
+for: branch
+
+variables:
+  version:
+    path: package.json/version
+  dev_ssh_pass:
+    external: true
+
+steps:
+
+  init:
+    script:
+      - echo "hello world"
+
+  build_docker:
+    only:
+      branch: main
+    after: init
+    docker:
+      image: simplyci:${version}
+      actions: [build]
+    env: local
+
+  deploy_local:
+    only:
+      branch: main
+    after: build_docker
+    script:
+      - docker pull simplyci:${version}
+    env: local
+
+envs:
+  dev:
+    ssh:
+      host: somehost
+      user: root
+      password: ${dev_ssh_pass}

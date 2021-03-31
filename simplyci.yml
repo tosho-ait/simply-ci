@@ -1,38 +1,32 @@
 
-for: branch
+configuration:
 
 variables:
-  version:
-    path: package.json/version
-  dev_ssh_pass:
-    external: true
+  VERSION:
+    query: file:package.json/version
 
 steps:
 
   init:
-    script:
-      - echo "hello world"
+    what:
+      script:
+        - echo "hello world"
 
   build_docker:
-    only:
+    what:
+      docker:
+        image: simplyci:${VERSION}
+        actions: [build]
+    when:
       branch: main
-    after: init
-    docker:
-      image: simplyci:${version}
-      actions: [build]
-    env: local
+      after: init
+    where: local
 
   deploy_local:
-    only:
+    what:
+      script:
+        - docker pull simplyci:${VERSION}
+    when:
       branch: main
-    after: build_docker
-    script:
-      - docker pull simplyci:${version}
-    env: local
-
-envs:
-  dev:
-    ssh:
-      host: somehost
-      user: root
-      password: ${dev_ssh_pass}
+      after: build_docker
+    where: local

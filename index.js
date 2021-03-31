@@ -1,57 +1,36 @@
 #!/usr/bin/env node
 
-const yargs = require("yargs");
+const exec = require("./app/service/exec");
+const args = require("./app/service/args");
+const build = require("./app/process/build");
+const git = require("./app/service/git");
+const fs = require("./app/service/fs");
+const cifile = require("./app/service/cifile");
 
-const argv = yargs
-    .usage("Usage: -n <name>")
-    .option('w', {
-        alias: 'watch',
-        demandOption: false,
-        default: false,
-        describe: 'Watch for changes and rebuild.',
-        type: 'boolean'
-    })
-    .option('s', {
-        alias: 'step',
-        demandOption: false,
-        describe: 'Build step to run.',
-        type: 'string'
-    })
-    .option('t', {
-        alias: 'target',
-        demandOption: false,
-        default: '/workspace',
-        describe: 'Target repository or folder to build.',
-        type: 'string'
-    })
-    .option('e', {
-        alias: 'env',
-        demandOption: false,
-        describe: 'Define build variable.',
-        type: 'string'
-    })
-    .help()
-    .argv;
+(async () => {
 
-const greeting = `Hello!`;
+    build.start();
 
-console.log(greeting);
-console.log(JSON.stringify(argv));
+    build.setArgs(args.get());
 
-const { exec } = require("child_process");
+    await exec.run({}, "pwd");
+    await exec.run({}, "ls -al /workspace");
 
-exec("cd /workspace && ls -al && docker build -t simplyci .", (error, stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
+    if (!build.isLocal()) {
+        git.clone(build);
     }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-    console.log(`stdout: ${stdout}`);
-});
+
+    let cifile = fs.get(build, build.ciFile);
+
+    build.setCiProcess(cifile.parse(build, cifile));
 
 
+
+
+    build.end();
+
+    // await exec({}, "docker ps");
+
+})();
 
 

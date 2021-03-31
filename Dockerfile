@@ -25,6 +25,6 @@ WORKDIR /usr/src/app
 # add the app
 COPY package*.json ./
 RUN npm install
-COPY . .
+COPY ./ .
 
 ENTRYPOINT [ "node", "index.js" ]

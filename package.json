@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/tosho-ait/simply-ci#readme",
   "dependencies": {
+    "js-yaml": "^4.0.0",
     "yargs": "^16.2.0"
   }
 }

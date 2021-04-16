@@ -1,5 +1,3 @@
-module.exports = {
-    clone: build => {
-
-    }
+module.exports = () => {
+    return {}
 };

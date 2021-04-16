@@ -1,32 +1,32 @@
-/*
-The context contains the following:
+module.exports = init => {
 
-- input arguments
-- simplyci file content
-- build type (local or git)
-- steps tree
-- process logs
+    let {services, space, context} = init;
 
- */
+    return {
+        run: () => {
 
-let context = undefined;
+            // read args
+            let args = services.args({services, space, context}).getArgs();
+            context(init).setArgs(args);
 
-module.exports = {
+            // read ciFile
+            let yaml = space.gitSpace({services, space, context}).loadYaml();
+            context(init).setYaml(yaml);
 
-    ciFile: "simplyci.yml",
+            // sort steps tree
+            let steps = space.steps({services, space, context}).getSteps(yaml);
+            context(init).setSteps(steps);
 
-    start: () => context = {},
+            // init envs
+            let envs = space.envs({services, space, context}).getEnvs(yaml);
+            context(init).setEnvs(envs);
 
-    setArgs: args => context = {...context, args},
+            // start steps loop
+            // - process args
+            // - exec step (git, script, docker, docker-compose, artifacts)
 
-    isLocal: () => true,
+            // store result to git if needed
 
-    isGit: () => false,
-
-    getWorkDir: () => context.args.target + "/",
-
-    end: () => {
-    },
-
-}
-
+        }
+    }
+};
